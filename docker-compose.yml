@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: gscore_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: gscore
+      POSTGRES_USER: gscore_user
+      POSTGRES_PASSWORD: gscore_pass
+    ports:
+      - '5445:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: gscore_redis
+    restart: always
+    ports:
+      - '6380:6379'
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
