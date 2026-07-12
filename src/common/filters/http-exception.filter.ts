@@ -38,7 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           : (resp.message as string);
       }
       if (resp.errors) errors = resp.errors;
-      
+
       // class-validator sends message as array
       if (Array.isArray(resp.message)) {
         errors = resp.message;

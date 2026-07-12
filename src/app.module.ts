@@ -3,9 +3,12 @@ import { APP_FILTER } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { StudentsModule } from './modules/students/students.module';
+import { RedisModule } from './modules/redis/redis.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
 
 @Module({
-  imports: [],
+  imports: [StudentsModule, RedisModule, PrismaModule],
   controllers: [AppController],
   providers: [
     AppService,
