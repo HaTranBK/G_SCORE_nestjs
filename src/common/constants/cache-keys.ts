@@ -3,5 +3,6 @@ export const CACHE_KEYS = {
 
   STUDENT_SCORE: (sbd: string) => `student:score:${sbd}`,
 
-  TOP_STUDENTS: (group: string, limit: number) => `dashboard:top-students:${group}:${limit}`,
+  TOP_STUDENTS: (group: string, limit: number) =>
+    `dashboard:top-students:${group}:${limit}`,
 };

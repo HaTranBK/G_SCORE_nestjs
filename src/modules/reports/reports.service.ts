@@ -15,7 +15,9 @@ export class ReportsService {
   async getScoreDistribution() {
     // 1. Try to fetch from Redis cache
     try {
-      const cachedData = await this.redisService.get(CACHE_KEYS.SCORE_DISTRIBUTION);
+      const cachedData = await this.redisService.get(
+        CACHE_KEYS.SCORE_DISTRIBUTION,
+      );
       if (cachedData) {
         this.logger.log('Serving score distribution from cache');
         return JSON.parse(cachedData);

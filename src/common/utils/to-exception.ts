@@ -7,7 +7,6 @@ export interface ErrorRegistryEntry {
   status: HttpStatus;
 }
 
-
 export type ErrorRegistry = Record<string, ErrorRegistryEntry>;
 
 /**
