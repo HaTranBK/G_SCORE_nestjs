@@ -6,12 +6,17 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   private client: Redis;
 
   onModuleInit() {
-    const host = process.env.REDIS_HOST || 'localhost';
-    const port = parseInt(process.env.REDIS_PORT || '6380', 10);
-    this.client = new Redis({
-      host,
-      port,
-    });
+    // Production: dùng REDIS_URL (Upstash hoặc Fly Redis)
+    // Local dev: dùng REDIS_HOST + REDIS_PORT
+    if (process.env.REDIS_URL) {
+      this.client = new Redis(process.env.REDIS_URL, {
+        tls: process.env.REDIS_URL.startsWith('rediss://') ? {} : undefined,
+      });
+    } else {
+      const host = process.env.REDIS_HOST || 'localhost';
+      const port = parseInt(process.env.REDIS_PORT || '6380', 10);
+      this.client = new Redis({ host, port });
+    }
   }
 
   async onModuleDestroy() {
