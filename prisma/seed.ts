@@ -29,7 +29,7 @@ async function main() {
   const startTime = Date.now();
   console.log("Reading CSV file into memory...");
   const content = fs.readFileSync(csvFilePath, 'utf-8');
-  
+
   console.log("Splitting CSV lines...");
   const lines = content.split('\n');
   console.log(`Total lines parsed: ${lines.length}. Starting database seed...`);
@@ -75,7 +75,7 @@ async function main() {
     }
   }
 
-  // Insert remaining records
+  // insert những thằng còn lại
   if (records.length > 0) {
     await prisma.studentScore.createMany({
       data: records,
