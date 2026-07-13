@@ -13,6 +13,16 @@ RUN npx prisma generate
 COPY . .
 RUN npm run build
 
+# Compile seed script riêng để dùng trong production (không cần ts-node)
+RUN npx tsc prisma/seed.ts prisma/verify.ts \
+    --outDir /app/dist-seed \
+    --module commonjs \
+    --target es2020 \
+    --esModuleInterop \
+    --skipLibCheck \
+    --resolveJsonModule || true
+
+
 # ---- Stage 2: Production ----
 FROM node:20-alpine AS production
 WORKDIR /app
@@ -23,6 +33,7 @@ RUN npm ci --only=production && npm cache clean --force
 
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/dist-seed ./dist-seed
 
 # Copy prisma: generated client + schema + migrations + config
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
