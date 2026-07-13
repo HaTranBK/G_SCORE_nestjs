@@ -5,6 +5,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# Copy prisma schema trước để generate client
+COPY prisma ./prisma
+RUN npx prisma generate
+
+# Copy toàn bộ source rồi build
 COPY . .
 RUN npm run build
 

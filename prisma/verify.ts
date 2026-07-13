@@ -12,7 +12,6 @@ async function main() {
   console.log('Connecting to database...');
   const count = await prisma.studentScore.count();
   console.log(`Total records in student_scores: ${count}`);
-
 }
 
 main()
