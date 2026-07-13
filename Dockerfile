@@ -9,6 +9,9 @@ RUN npm ci
 COPY prisma ./prisma
 RUN npx prisma generate
 
+# Copy data folder chứa file CSV
+COPY data ./data
+
 # Copy toàn bộ source rồi build
 COPY . .
 RUN npm run build
@@ -34,6 +37,9 @@ RUN npm ci --only=production && npm cache clean --force
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/dist-seed ./dist-seed
+
+# Copy data folder chứa file CSV sang production
+COPY --from=builder /app/data ./data
 
 # Copy prisma: generated client + schema + migrations + config
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
