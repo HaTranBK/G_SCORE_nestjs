@@ -3,7 +3,6 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
-  HttpStatus,
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
@@ -16,7 +15,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
 
     const exceptionResponse = exception.getResponse();
@@ -38,7 +36,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           : (resp.message as string);
       }
       if (resp.errors) errors = resp.errors;
-      
+
       // class-validator sends message as array
       if (Array.isArray(resp.message)) {
         errors = resp.message;
@@ -47,11 +45,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }
     }
 
-    if (status === HttpStatus.UNAUTHORIZED && code === 'HTTP_ERROR') {
+    if (status === 401 && code === 'HTTP_ERROR') {
       code = 'UNAUTHORIZED';
-    } else if (status === HttpStatus.FORBIDDEN && code === 'HTTP_ERROR') {
+    } else if (status === 403 && code === 'HTTP_ERROR') {
       code = 'FORBIDDEN';
-    } else if (status === HttpStatus.NOT_FOUND && code === 'HTTP_ERROR') {
+    } else if (status === 404 && code === 'HTTP_ERROR') {
       code = 'NOT_FOUND';
     }
 

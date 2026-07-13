@@ -22,5 +22,6 @@ model StudentScore {
   gdcd         Float?
   ma_ngoai_ngu String? @db.VarChar(10)
 
+  @@index([sbd])
   @@map("student_scores")
 }
