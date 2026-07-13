@@ -50,4 +50,4 @@ COPY prisma.config.ts ./prisma.config.ts
 EXPOSE 8000
 
 # Chạy migrate rồi mới start server
-CMD ["sh", "-c", "DATABASE_URL=$DATABASE_URL npx prisma migrate deploy && node dist/main"]
+CMD ["sh", "-c", "DATABASE_URL=$DATABASE_URL npx prisma migrate deploy && node dist/src/main"]
