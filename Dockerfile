@@ -24,11 +24,13 @@ RUN npm ci --only=production && npm cache clean --force
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
 
-# Copy prisma schema & generated client
+# Copy prisma: generated client + schema + migrations + config
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY prisma ./prisma
+COPY prisma.config.ts ./prisma.config.ts
 
 EXPOSE 8000
 
 # Chạy migrate rồi mới start server
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
+CMD ["sh", "-c", "DATABASE_URL=$DATABASE_URL npx prisma migrate deploy && node dist/main"]
