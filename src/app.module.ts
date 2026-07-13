@@ -6,9 +6,10 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { StudentsModule } from './modules/students/students.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
+import { ReportsModule } from './modules/reports/reports.module';
 
 @Module({
-  imports: [StudentsModule, RedisModule, PrismaModule],
+  imports: [StudentsModule, RedisModule, PrismaModule, ReportsModule],
   controllers: [AppController],
   providers: [
     AppService,

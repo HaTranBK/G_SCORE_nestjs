@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { StudentScore } from '@prisma/client';
 import { StudentsRepository } from './students.repository';
 import { RedisService } from '../redis/redis.service';
+import { CACHE_KEYS } from '../../common/constants/cache-keys';
 
 @Injectable()
 export class StudentsService {
@@ -11,7 +12,7 @@ export class StudentsService {
   ) {}
 
   async findOne(sbd: string) {
-    const cacheKey = `student:score:${sbd}`;
+    const cacheKey = CACHE_KEYS.STUDENT_SCORE(sbd);
 
     // 1. Try to get cached student score from Redis
     try {
