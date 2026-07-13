@@ -24,6 +24,4 @@ primary_region = 'sin'
   cpu_kind = 'shared'
   cpus = 1
 
-[[mounts]]
-  source = "gscore_data"
-  destination = "/app/data"
+# Không dùng volume mounts nữa để tránh đè lên file CSV trong image
