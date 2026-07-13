@@ -7,9 +7,10 @@ import { StudentsModule } from './modules/students/students.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { ReportsModule } from './modules/reports/reports.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
-  imports: [StudentsModule, RedisModule, PrismaModule, ReportsModule],
+  imports: [StudentsModule, RedisModule, PrismaModule, ReportsModule, DashboardModule],
   controllers: [AppController],
   providers: [
     AppService,
