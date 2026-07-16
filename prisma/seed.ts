@@ -19,7 +19,14 @@ const parseScore = (val: string): number | null => {
 };
 
 async function main() {
-  const csvFilePath = path.join(__dirname, '../data/diem_thi_thpt_2024.csv');
+  let csvFilePath = path.join(__dirname, '../data/diem_thi_thpt_2024.csv');
+  
+  // Nếu chạy trên docker container thì root dir sẽ là /app
+  const dockerCsvPath = '/app/data/diem_thi_thpt_2024.csv';
+  if (fs.existsSync(dockerCsvPath)) {
+    csvFilePath = dockerCsvPath;
+  }
+  
   console.log(`Starting to seed data from: ${csvFilePath}`);
 
   if (!fs.existsSync(csvFilePath)) {
@@ -31,7 +38,8 @@ async function main() {
   const content = fs.readFileSync(csvFilePath, 'utf-8');
 
   console.log("Splitting CSV lines...");
-  const lines = content.split('\n');
+  // Split hỗ trợ cả \r\n (Windows) và \n (Linux/Unix), loại bỏ dòng trống
+  const lines = content.split(/\r?\n/).filter(line => line.trim() !== '');
   console.log(`Total lines parsed: ${lines.length}. Starting database seed...`);
 
   let records: any[] = [];

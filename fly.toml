@@ -10,9 +10,9 @@ primary_region = 'sin'
 [http_service]
   internal_port = 8000
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = 'off'
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
 
   [http_service.concurrency]
     type = "connections"
@@ -24,6 +24,4 @@ primary_region = 'sin'
   cpu_kind = 'shared'
   cpus = 1
 
-[[mounts]]
-  source = "gscore_data"
-  destination = "/app/data"
+# Không dùng volume mounts nữa để tránh đè lên file CSV trong image

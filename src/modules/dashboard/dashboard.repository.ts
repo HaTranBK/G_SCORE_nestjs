@@ -20,12 +20,12 @@ export class DashboardRepository {
         toan,
         vat_li,
         hoa_hoc,
-        ROUND((toan + vat_li + hoa_hoc)::numeric, 2) AS tong_khoi_a
-      FROM student_scores
+        (COALESCE(toan, 0) + COALESCE(vat_li, 0) + COALESCE(hoa_hoc, 0)) AS tong_khoi_a
+      FROM "student_scores"
       WHERE toan IS NOT NULL
         AND vat_li IS NOT NULL
         AND hoa_hoc IS NOT NULL
-      ORDER BY tong_khoi_a DESC, toan DESC
+      ORDER BY (toan + vat_li + hoa_hoc) DESC, toan DESC
       LIMIT ${limit};
     `;
 
